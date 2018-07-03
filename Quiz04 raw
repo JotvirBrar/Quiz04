@@ -1,0 +1,59 @@
+def infNorm(vector):
+  norm = vector[0] 
+  for element in vector:
+    if norm < abs(element):
+        norm = abs(element)
+  return norm
+
+def normalize(vector):
+  norm = infNorm(vector)
+  final = []
+  for element in vector:
+    final.append((1.0/norm)*element)
+  return final
+
+def dot(vector01, vector02):
+  ans = 0
+  for i in range(len(vector01)):
+    ans += vector01[i]*vector02[i]
+  return ans
+
+def vector_mult(x,a):
+  final = []
+  for i in range(len(x)):
+    final.append(x[i] * a)
+  return final
+
+
+def vecSubtract(vector01,vector02):
+  new = []
+  for i in range(len(vector01)):
+    newvec.append(vector01[i] - vector02[i])
+  return newvec
+
+
+A = [[2, 1, 2], [1, -1, 1]]
+
+def GrSc(A):
+  n = len(A)
+  m = len(A[0])
+  Q = [[0] * m for i in range(n)]
+  R = [[0] * n for i in range(n)]
+  v = [[0] * m for i in range(n)]
+
+  for i in range(n):
+    v[i] = A[i]
+  for i in range(n):
+    R[i][i] = infNorm(v[i])
+    Q[i] = normalize(v[i])
+    for j in range(i + 1, n):
+      R[i][j] = dot(Q[i],v[j])
+      temp = vector_mult(R[i][j], Q[i])
+      v[j] = vecSubtract(v[j],temp)
+  return [Q, R]
+
+output = GrSc(A)
+print(output[0])
+print(output[1])
+
+
