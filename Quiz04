@@ -1,0 +1,93 @@
+def infNorm(vector):
+  """
+  I use this function to find the infinity norm of a vector. Using a for loop, infNorm iterates through each component of the vector to take the absolute value and then an inner if statement to compare each component to find the largest value. The function should return the largest absolute value in the vector.
+  The input should be a 1 x n vector.
+
+  """
+  norm = vector[0] 
+  for element in vector:
+    if norm < abs(element):
+        norm = abs(element)
+        #sets norm equal to the absolute value of the maximum component
+  return norm
+
+def normalize(vector):
+  """
+  normalize(vector) normalizes a vector with respect to the infinty norm. I utilize the infNorm function to calculate the maximum absoulute value and a for loop to iterate and use the 1/norm*element. The function should return the normalization with respect to the infinity norm in the form of a 1 x n vector.
+  """ 
+  norm = infNorm(vector)
+  final = []
+  for element in vector:
+    final.append((1.0/norm)*element)
+    #applying the formula to normalize each element in the vector and add it to new_vector
+  return final
+
+def dot(vector01, vector02):
+  """
+  This function takes in two vectors and returns the dot product of them. The output should be a scalar. vector01 and vector 02 should both be 1 x n vectors.
+  """
+  ans = 0
+  #initializing an array
+  for i in range(len(vector01)):
+    # #iterates through each of the elements in the vectors and adds them up and puts them into ans
+    ans += vector01[i]*vector02[i]
+  return ans
+
+def vectorscamult(scalar, vector):
+  '''
+  This function takes in a scalar and a vector. It multiplies each value of the vector with the scalar and returns a new list after appending.
+  '''
+  new = []
+  for i in range(len(vector)):
+    total = 0
+    # total is after i, so it resets to the first element and add to the second
+    total += vector[i] * scalar
+    new.append(total)
+  return new
+
+
+def vecSubtract(vector01,vector02):
+  """
+  vecSubtract akes in two vectors and computes the subrction of the two, and then add it to an empty list.
+  The input and output should both be vectors of 1 x n.
+  """
+  newvec = []
+  for i in range(len(vector01)):
+    newvec.append(vector01[i] - vector02[i])
+  return newvec
+
+
+A = [[1, 2, 3], [2, -1, 3]]
+
+def GrSc(A):
+  """
+  The modified Gram-Schmidt algorithm takes comlumn vectors inside a matrix and computes orthonormal vectors. Q and R are returned after being subtracted from the original matrix.
+  """
+  n = len(A)
+  m = len(A[0])
+  Q = [[0] * m for i in range(n)]
+  R = [[0] * n for i in range(n)]
+  v = [[0] * m for i in range(n)]
+  #the dimension of R must match with Q and vice versa for multiplication
+
+  for i in range(n):
+    v[i] = A[i]
+  for i in range(n):
+    R[i][i] = infNorm(v[i])
+    #taking infinity norm of R
+    Q[i] = normalize(v[i])
+    #normalizing with respect to infinity norm
+    for j in range(i + 1, n):
+      R[i][j] = dot(Q[i],v[j])
+      #dot product
+      temp = vectorscamult(R[i][j], Q[i])
+      #vector scalar multiplication
+      v[j] = vecSubtract(v[j],temp)
+      #vector subtraction
+  return [Q, R]
+
+output = GrSc(A)
+print(output[0])
+print(output[1])
+
+
