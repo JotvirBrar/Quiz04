@@ -1,3 +1,23 @@
+def twoNorm(vector):
+  '''
+  twoNorm takes a vector as it's argument. It then computes the sum of  the squares of each element of the vector. It then returns the square root of this sum.
+  '''
+  # This variable will keep track of the validity of our input.
+  inputStatus = True  
+  # This for loop will check each element of the vector to see if it's a number. 
+  for i in range(len(vector)):  
+    if ((type(vector[i]) != int) and (type(vector[i]) != float) and (type(vector[i]) != complex)):
+      inputStatus = False
+      print("Invalid Input")
+  # If the input is valid the function continues to compute the 2-norm
+  if inputStatus == True:
+    result = 0
+# This for loop will compute the sum of the squares of the elements of the vector. 
+    for i in range(len(vector)):
+      result = result + (vector[i]**2)
+    result = result**(1/2)
+    return result
+  
 def infNorm(vector):
   """
   I use this function to find the infinity norm of a vector. Using a for loop, infNorm iterates through each component of the vector to take the absolute value and then an inner if statement to compare each component to find the largest value. The function should return the largest absolute value in the vector.
@@ -73,8 +93,8 @@ def GrSc(A):
   for i in range(n):
     v[i] = A[i]
   for i in range(n):
-    R[i][i] = infNorm(v[i])
-    #taking infinity norm of R
+    R[i][i] = twoNorm(v[i])
+    #taking two norm of R
     Q[i] = normalize(v[i])
     #normalizing with respect to infinity norm
     for j in range(i + 1, n):
@@ -89,5 +109,3 @@ def GrSc(A):
 output = GrSc(A)
 print(output[0])
 print(output[1])
-
-
