@@ -84,11 +84,13 @@ def GrSc(A):
   The modified Gram-Schmidt algorithm takes comlumn vectors inside a matrix and computes orthonormal vectors. Q and R are returned after being subtracted from the original matrix.
   """
   n = len(A)
+  #rows
   m = len(A[0])
+  #columns
   Q = [[0] * m for i in range(n)]
   R = [[0] * n for i in range(n)]
   v = [[0] * m for i in range(n)]
-  #the dimension of R must match with Q and vice versa for multiplication
+  #the dimension of R must match with Q and vice versa for multiplication. These are all zero matrices
 
   for i in range(n):
     v[i] = A[i]
@@ -99,11 +101,11 @@ def GrSc(A):
     #normalizing with respect to infinity norm
     for j in range(i + 1, n):
       R[i][j] = dot(Q[i],v[j])
-      #dot product
+      #dot product of norm vector and vectors, makes scalar
       temp = vectorscamult(R[i][j], Q[i])
-      #vector scalar multiplication
+      #vector scalar multiplication takes solution from dot product and normalized vector, multiples them together
       v[j] = vecSubtract(v[j],temp)
-      #vector subtraction
+      #vector subtraction of vectorscamult from vectors
   return [Q, R]
 
 output = GrSc(A)
